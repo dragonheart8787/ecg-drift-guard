@@ -1,0 +1,120 @@
+{
+  "external_db": "svdb",
+  "n_beats": 27720,
+  "metrics": {
+    "acc": 0.8532,
+    "f1_macro": 0.3028,
+    "ece": 0.0943,
+    "brier": 0.1738
+  },
+  "per_class": [
+    {
+      "class": "N",
+      "precision": 0.9756,
+      "recall": 0.8816,
+      "f1-score": 0.9262,
+      "support": 26314
+    },
+    {
+      "class": "S",
+      "precision": 0.0093,
+      "recall": 0.0563,
+      "f1-score": 0.0159,
+      "support": 320
+    },
+    {
+      "class": "V",
+      "precision": 0.9931,
+      "recall": 0.4015,
+      "f1-score": 0.5718,
+      "support": 1081
+    },
+    {
+      "class": "F",
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 5
+    },
+    {
+      "class": "Q",
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 0
+    }
+  ],
+  "confusion_matrix": [
+    [
+      23199,
+      1648,
+      1,
+      2,
+      1464
+    ],
+    [
+      246,
+      18,
+      1,
+      0,
+      55
+    ],
+    [
+      330,
+      275,
+      434,
+      17,
+      25
+    ],
+    [
+      4,
+      0,
+      1,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  ],
+  "drift_vs_internal": {
+    "drift_score": 0.5827,
+    "psi_mean": 0.3046,
+    "ks_rate": 1.0,
+    "top_dims": [
+      74,
+      65,
+      104,
+      45,
+      16
+    ]
+  },
+  "ood": {
+    "method": "mahalanobis",
+    "threshold": 18.4756,
+    "ood_rate": 0.373,
+    "ref_stats": {
+      "threshold": 18.4756,
+      "percentile_used": 95.0,
+      "mean": 10.5714,
+      "std": 3.8335,
+      "p50": 9.5009,
+      "p90": 15.4527,
+      "p95": 18.4756,
+      "p99": 24.7794
+    }
+  },
+  "risk_policy": {
+    "total": 27720,
+    "reject_rate": 0.0338,
+    "degrade_rate": 0.9662,
+    "warn_rate": 0.0,
+    "accept_rate": 0.0,
+    "ood_reject_count": 0
+  },
+  "note": "External validation without retraining. Drift score and OOD rate reflect distribution mismatch between MIT-BIH training data and the external dataset."
+}

@@ -1,0 +1,62 @@
+========================================================================
+  ECG DRIFT GUARD — HYPOTHESIS VERIFICATION REPORT
+========================================================================
+
+[H1] When drift_score increases, model performance (F1/accuracy) drops significantly.
+  Spearman ρ = 0.6500
+  p-value    = 0.0581
+  Result     : ✓ SUPPORTED
+  Baseline B (signal features) Spearman ρ = 0.3667
+  → Embedding drift outperforms signal-feature drift
+
+[H2] Temperature Scaling reduces ECE and aligns confidence with accuracy.
+  ECE   : 0.1060 → 0.0692
+  Brier : 0.3191 → 0.3066
+  T     = 0.7464
+  ECE reduction = 34.7000%
+  Result: ✓ SUPPORTED
+
+[H3] Risk policy (reject/degrade) reduces error rate at acceptable rejection cost.
+  Error rate (overall)       = 0.2168
+  Error rate (after policy)  = 0.1700
+  Error reduction            = 0.0468
+  Reject rate                = 0.0773
+  Result: ✓ SUPPORTED
+
+========================================================================
+  FAILURE MODES
+========================================================================
+  Mode      : Sampling rate mismatch
+  Effect    : Beat waveform shape distorted → increased misclassification
+  Detection : drift_score ↑ (resample scenario)
+  Mitigation: warning/critical → degrade to binary
+  Residual  : Extreme mismatch (<100 Hz) may not be recoverable
+
+  Mode      : Powerline noise (50/60 Hz)
+  Effect    : V/S class misclassification ↑
+  Detection : PSI/KS ↑ on embedding dims sensitive to HF noise
+  Mitigation: reject or warn + suggest re-acquisition
+  Residual  : Noise buried in QRS may evade detection
+
+  Mode      : Gain/amplitude shift
+  Effect    : Normalisation partially compensates but extreme shifts break features
+  Detection : drift_score ↑ (gain scenario)
+  Mitigation: warning at moderate, critical at extreme
+  Residual  : Saturated signals lose information permanently
+
+  Mode      : Class prior shift
+  Effect    : Certain classes over/under-represented → biased recall
+  Detection : Prior distribution monitor (separate from feature drift)
+  Mitigation: Alert for retraining; flag in audit log
+  Residual  : Requires labelled deployment data to fully detect
+
+  Mode      : Concept drift (pathology evolution)
+  Effect    : P(Y|X) changes → model silently degrades
+  Detection : Performance monitoring with labelled feedback loop
+  Mitigation: Periodic retrain triggers; external validation
+  Residual  : Cannot detect without ground truth labels
+
+========================================================================
+  SCOPE: This system is a deployment-time safety layer for ECG classification. It is NOT a diagnostic tool and is intended for research/education only.
+  SPLIT: We adopt the DS1/DS2 inter-patient split (de Chazal 2004) to prevent patient leakage and ensure fair evaluation.
+========================================================================

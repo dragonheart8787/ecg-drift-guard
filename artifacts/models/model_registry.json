@@ -1,0 +1,42 @@
+[
+  {
+    "version_id": "v20260305T130945_s42_fb085cec",
+    "created_utc": "2026-03-05T13:09:45.757794+00:00",
+    "model_hash": "no_model",
+    "config_hash": "fb085cec",
+    "metrics": {
+      "val_acc": null,
+      "val_f1_macro": null,
+      "val_acc_ci": null,
+      "val_f1_ci": null,
+      "test_acc": null,
+      "test_f1_macro": null
+    },
+    "calibration_T": null,
+    "model_path": "C:\\Users\\User\\Desktop\\ECG Drift Guard\\ecg_drift_guard\\artifacts\\models\\cnn1d.keras",
+    "notes": ""
+  },
+  {
+    "version_id": "v20260309T132445_s42_fb085cec",
+    "created_utc": "2026-03-09T13:24:45.579465+00:00",
+    "model_hash": "92929781",
+    "config_hash": "fb085cec",
+    "metrics": {
+      "val_acc": 0.9115,
+      "val_f1_macro": 0.2361,
+      "val_acc_ci": [
+        0.9072,
+        0.9166
+      ],
+      "val_f1_ci": [
+        0.2274,
+        0.2442
+      ],
+      "test_acc": 0.7832,
+      "test_f1_macro": 0.2707
+    },
+    "calibration_T": 0.7464,
+    "model_path": "C:\\Users\\User\\Desktop\\ECG Drift Guard\\ecg_drift_guard\\artifacts\\models\\cnn1d.keras",
+    "notes": ""
+  }
+]

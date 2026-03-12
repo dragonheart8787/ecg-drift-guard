@@ -1,0 +1,60 @@
+seed: 42
+
+dataset:
+  name: mitdb
+  db_dir: data/raw
+  fs: 360
+  window:
+    pre_sec: 0.2
+    post_sec: 0.4
+  normalize: zscore
+  aami_version: v1
+
+split:
+  ratios: [0.7, 0.1, 0.2]
+  method: inter_patient
+
+model:
+  input_len: 216
+  n_classes: 5
+  dropout: 0.3
+  epochs: 10
+  batch_size: 256
+  lr: 0.001
+
+drift:
+  scenarios: ["noise", "resample", "gain"]
+  intensities: ["S1", "S2", "S3"]
+  psi_bins: 10
+  ks_alpha: 0.01
+  aggregate:
+    w_psi: 0.6
+    w_ks: 0.4
+
+calibration:
+  n_bins: 15
+  method: temperature_scaling
+
+risk:
+  thresholds:
+    warning: 0.15
+    critical: 0.22
+    conf_low: 0.5
+    conf_mid: 0.7
+
+ood:
+  method: mahalanobis
+  percentile_threshold: 95.0
+
+external:
+  db_name: svdb
+  max_records: null
+
+bootstrap:
+  n_boot: 1000
+  ci: 0.95
+
+benchmark:
+  batch_sizes: [1, 32, 128, 256, 512]
+  n_warmup: 3
+  n_repeat: 10

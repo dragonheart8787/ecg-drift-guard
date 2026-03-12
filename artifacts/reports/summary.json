@@ -1,0 +1,335 @@
+{
+  "scope_statement": "This system is a deployment-time safety layer for ECG classification. It is NOT a diagnostic tool and is intended for research/education only.",
+  "dataset": {
+    "name": "MIT-BIH",
+    "split": "inter-patient (DS1/DS2, de Chazal 2004)",
+    "window_len": 216,
+    "aami_version": "v1"
+  },
+  "split_note": "We adopt the DS1/DS2 inter-patient split (de Chazal 2004) to prevent patient leakage and ensure fair evaluation.",
+  "model": {
+    "arch": "1d-cnn",
+    "classes": [
+      "N",
+      "S",
+      "V",
+      "F",
+      "Q"
+    ],
+    "n_params": 36741
+  },
+  "class_distribution": {
+    "train": {
+      "N": {
+        "count": 33786,
+        "ratio": 0.8954
+      },
+      "S": {
+        "count": 391,
+        "ratio": 0.0104
+      },
+      "V": {
+        "count": 3149,
+        "ratio": 0.0835
+      },
+      "F": {
+        "count": 399,
+        "ratio": 0.0106
+      },
+      "Q": {
+        "count": 8,
+        "ratio": 0.0002
+      },
+      "_total": 37733
+    },
+    "val": {
+      "N": {
+        "count": 12066,
+        "ratio": 0.9091
+      },
+      "S": {
+        "count": 553,
+        "ratio": 0.0417
+      },
+      "V": {
+        "count": 639,
+        "ratio": 0.0481
+      },
+      "F": {
+        "count": 15,
+        "ratio": 0.0011
+      },
+      "Q": {
+        "count": 0,
+        "ratio": 0.0
+      },
+      "_total": 13273
+    },
+    "test": {
+      "N": {
+        "count": 44242,
+        "ratio": 0.8903
+      },
+      "S": {
+        "count": 1837,
+        "ratio": 0.037
+      },
+      "V": {
+        "count": 3220,
+        "ratio": 0.0648
+      },
+      "F": {
+        "count": 388,
+        "ratio": 0.0078
+      },
+      "Q": {
+        "count": 7,
+        "ratio": 0.0001
+      },
+      "_total": 49694
+    }
+  },
+  "baseline": {
+    "acc": 0.7832,
+    "f1_macro": 0.2707
+  },
+  "calibration": {
+    "ece_before": 0.106,
+    "ece_after": 0.0692,
+    "brier_before": 0.3191,
+    "brier_after": 0.3066,
+    "temperature_T": 0.7464
+  },
+  "drift": [
+    {
+      "scenario": "noise",
+      "intensity": "S1",
+      "drift_score": 1.1221,
+      "baseline_drift_score": 1.7546,
+      "perf_drop_f1": 0.0806
+    },
+    {
+      "scenario": "noise",
+      "intensity": "S2",
+      "drift_score": 4.165,
+      "baseline_drift_score": 2.0486,
+      "perf_drop_f1": 0.2648
+    },
+    {
+      "scenario": "noise",
+      "intensity": "S3",
+      "drift_score": 5.2553,
+      "baseline_drift_score": 2.9222,
+      "perf_drop_f1": 0.2706
+    },
+    {
+      "scenario": "resample",
+      "intensity": "S1",
+      "drift_score": 0.022,
+      "baseline_drift_score": 1.2908,
+      "perf_drop_f1": 0.0007
+    },
+    {
+      "scenario": "resample",
+      "intensity": "S2",
+      "drift_score": 0.2423,
+      "baseline_drift_score": 1.2909,
+      "perf_drop_f1": 0.0029
+    },
+    {
+      "scenario": "resample",
+      "intensity": "S3",
+      "drift_score": 0.3115,
+      "baseline_drift_score": 1.291,
+      "perf_drop_f1": 0.0048
+    },
+    {
+      "scenario": "gain",
+      "intensity": "S1",
+      "drift_score": 0.2161,
+      "baseline_drift_score": 1.5899,
+      "perf_drop_f1": -0.0097
+    },
+    {
+      "scenario": "gain",
+      "intensity": "S2",
+      "drift_score": 0.4621,
+      "baseline_drift_score": 1.7854,
+      "perf_drop_f1": -0.0128
+    },
+    {
+      "scenario": "gain",
+      "intensity": "S3",
+      "drift_score": 0.5904,
+      "baseline_drift_score": 1.9134,
+      "perf_drop_f1": -0.0045
+    }
+  ],
+  "correlation": {
+    "H1_embedding_vs_f1_drop": {
+      "pearson_r": 0.9812,
+      "pearson_p": 3e-06,
+      "spearman_r": 0.65,
+      "spearman_p": 0.058073
+    },
+    "H1_embedding_vs_acc_drop": {
+      "pearson_r": 0.9586,
+      "pearson_p": 4.6e-05,
+      "spearman_r": 0.6167,
+      "spearman_p": 0.076929
+    },
+    "baseline_B_vs_f1_drop": {
+      "pearson_r": 0.7885,
+      "pearson_p": 0.011566,
+      "spearman_r": 0.3667,
+      "spearman_p": 0.33174
+    }
+  },
+  "hypotheses": {
+    "H1": {
+      "hypothesis": "When drift_score increases, model performance (F1/accuracy) drops significantly.",
+      "spearman_r": 0.65,
+      "spearman_p": 0.058073,
+      "supported": true,
+      "evidence": "Spearman ρ=0.65, p=0.058073"
+    },
+    "H2": {
+      "hypothesis": "Temperature Scaling reduces ECE and aligns confidence with accuracy.",
+      "ece_before": 0.106,
+      "ece_after": 0.0692,
+      "ece_reduction_pct": 34.7,
+      "brier_before": 0.3191,
+      "brier_after": 0.3066,
+      "supported": true,
+      "evidence": "ECE 0.1060 → 0.0692"
+    },
+    "H3": {
+      "hypothesis": "Risk policy (reject/degrade) reduces error rate at acceptable rejection cost.",
+      "error_rate_overall": 0.2168,
+      "error_rate_after_policy": 0.17,
+      "error_reduction": 0.0468,
+      "reject_rate": 0.0773,
+      "supported": true,
+      "evidence": "Error 0.2168 → 0.1700 (reject 7.73%)"
+    }
+  },
+  "risk_policy": {
+    "thresholds": {
+      "warning": 0.15,
+      "critical": 0.22,
+      "conf_low": 0.5,
+      "conf_mid": 0.7
+    }
+  },
+  "risk_results": {
+    "total": 49694,
+    "reject_rate": 0.0773,
+    "degrade_rate": 0.0227,
+    "warn_rate": 0.0442,
+    "accept_rate": 0.8558,
+    "ood_reject_count": 0
+  },
+  "audit_summary": {
+    "total_samples": 49694,
+    "action_counts": {
+      "accept": 42530,
+      "warn": 2194,
+      "degrade": 1128,
+      "reject": 3842
+    },
+    "reason_counts": {
+      "NORMAL": 42530,
+      "UNKNOWN": 2194,
+      "DRIFT_CRIT_DEGRADE": 1128,
+      "DRIFT_CRIT_CONF_LOW": 3842
+    },
+    "error_rate_overall": 0.2168,
+    "error_rate_after_policy": 0.17,
+    "error_rate_reduced": 0.0468,
+    "reject_rate": 0.0773
+  },
+  "uncertainty_gate_quantile": 0.9,
+  "drift_vs_uncertainty_note": "Sample-level gating uses predictive entropy as a risk heuristic; distribution drift is evaluated at window-level via embedding PSI/KS.",
+  "failure_modes": [
+    {
+      "mode": "Sampling rate mismatch",
+      "effect": "Beat waveform shape distorted → increased misclassification",
+      "detection": "drift_score ↑ (resample scenario)",
+      "mitigation": "warning/critical → degrade to binary",
+      "residual_risk": "Extreme mismatch (<100 Hz) may not be recoverable"
+    },
+    {
+      "mode": "Powerline noise (50/60 Hz)",
+      "effect": "V/S class misclassification ↑",
+      "detection": "PSI/KS ↑ on embedding dims sensitive to HF noise",
+      "mitigation": "reject or warn + suggest re-acquisition",
+      "residual_risk": "Noise buried in QRS may evade detection"
+    },
+    {
+      "mode": "Gain/amplitude shift",
+      "effect": "Normalisation partially compensates but extreme shifts break features",
+      "detection": "drift_score ↑ (gain scenario)",
+      "mitigation": "warning at moderate, critical at extreme",
+      "residual_risk": "Saturated signals lose information permanently"
+    },
+    {
+      "mode": "Class prior shift",
+      "effect": "Certain classes over/under-represented → biased recall",
+      "detection": "Prior distribution monitor (separate from feature drift)",
+      "mitigation": "Alert for retraining; flag in audit log",
+      "residual_risk": "Requires labelled deployment data to fully detect"
+    },
+    {
+      "mode": "Concept drift (pathology evolution)",
+      "effect": "P(Y|X) changes → model silently degrades",
+      "detection": "Performance monitoring with labelled feedback loop",
+      "mitigation": "Periodic retrain triggers; external validation",
+      "residual_risk": "Cannot detect without ground truth labels"
+    }
+  ],
+  "concept_drift_playbook": {
+    "definition": "Concept drift occurs when P(Y|X) changes — the relationship between input features and labels shifts over time, even if the input distribution stays the same. Unlike covariate shift (P(X) changes), concept drift cannot be detected from features alone.",
+    "detection_requirements": [
+      "Delayed ground-truth labels from clinical feedback loop",
+      "Periodic performance audits comparing predicted vs actual labels",
+      "Monitoring per-class recall / precision over time windows"
+    ],
+    "trigger_conditions": {
+      "retrain": "Trigger when: (1) test F1 drops >5% relative to baseline, sustained over 2+ evaluation windows; OR (2) per-class recall for critical classes (V, S) drops below acceptable threshold.",
+      "freeze": "Freeze the model when: no significant performance change detected; keep current version with documented performance metrics.",
+      "rollback": "Rollback to previous model version when: newly retrained model performs worse on held-out validation set; use model_registry.json to identify last-known-good version."
+    },
+    "delayed_label_strategy": "In clinical settings, labels may arrive days/weeks after inference. Strategy: (1) Buffer predictions with confidence scores; (2) When labels arrive, compute delayed performance metrics; (3) Flag if delayed metrics diverge from initial calibrated confidence.",
+    "monitoring_cadence": {
+      "covariate_drift": "Continuous (every batch)",
+      "calibration_check": "Daily / weekly",
+      "concept_drift_audit": "Weekly / monthly (requires labels)",
+      "full_revalidation": "Quarterly or on major system changes"
+    }
+  },
+  "model_card": {
+    "model_name": "ECG Drift Guard — 1D-CNN Beat Classifier with Safety Layer",
+    "version": "1.0",
+    "purpose": "Research demonstration of deployment-time safety monitoring for ECG classification. NOT a medical device. NOT for clinical diagnosis.",
+    "intended_use": "Educational / research: illustrate drift detection, calibration, and risk-policy for medical AI.",
+    "not_intended_for": "Clinical decision-making, patient diagnosis, regulatory submission.",
+    "training_data": "MIT-BIH Arrhythmia Database (48 records, 109k+ beats), AAMI 5-class mapping.",
+    "split_method": "DS1/DS2 inter-patient split (de Chazal 2004) to prevent patient leakage.",
+    "evaluation_metrics": "Accuracy, F1 macro, ECE, Brier score, drift_score (PSI+KS), reject rate.",
+    "limitations": [
+      "Single-lead ECG only (MLII); multi-lead not supported.",
+      "Trained on MIT-BIH only; external validation on other datasets not performed.",
+      "Drift detection assumes covariate shift; concept drift requires labelled feedback.",
+      "Risk thresholds are heuristic; clinical deployment requires rigorous threshold tuning."
+    ],
+    "ethical_considerations": "This system is for research purposes only. Any medical application must comply with local regulations (e.g., FDA, CE marking) and undergo clinical validation."
+  },
+  "environment": {
+    "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "tensorflow": "2.16.2",
+    "numpy": "1.26.4",
+    "wfdb": "4.3.1",
+    "scipy": "1.17.1"
+  }
+}

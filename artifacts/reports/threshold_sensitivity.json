@@ -1,0 +1,49 @@
+{
+  "configs": [
+    {
+      "config": "conservative",
+      "thresholds": {
+        "name": "conservative",
+        "warning": 0.1,
+        "critical": 0.15,
+        "conf_low": 0.6,
+        "conf_mid": 0.8
+      },
+      "reject_rate": 0.0984,
+      "coverage": 0.9016,
+      "error_overall": 0.2168,
+      "error_after_policy": 0.1572,
+      "error_reduction": 0.0596
+    },
+    {
+      "config": "default",
+      "thresholds": {
+        "name": "default",
+        "warning": 0.15,
+        "critical": 0.22,
+        "conf_low": 0.5,
+        "conf_mid": 0.7
+      },
+      "reject_rate": 0.0773,
+      "coverage": 0.9227,
+      "error_overall": 0.2168,
+      "error_after_policy": 0.17,
+      "error_reduction": 0.0468
+    },
+    {
+      "config": "liberal",
+      "thresholds": {
+        "name": "liberal",
+        "warning": 0.2,
+        "critical": 0.3,
+        "conf_low": 0.4,
+        "conf_mid": 0.6
+      },
+      "reject_rate": 0.0217,
+      "coverage": 0.9783,
+      "error_overall": 0.2168,
+      "error_after_policy": 0.204,
+      "error_reduction": 0.0128
+    }
+  ]
+}

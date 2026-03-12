@@ -1,0 +1,76 @@
+{
+  "model_latency": [
+    {
+      "batch_size": 1,
+      "total_ms": 43.46,
+      "per_beat_ms": 43.4626,
+      "std_ms": 0.91
+    },
+    {
+      "batch_size": 32,
+      "total_ms": 44.91,
+      "per_beat_ms": 1.4034,
+      "std_ms": 1.18
+    },
+    {
+      "batch_size": 128,
+      "total_ms": 48.05,
+      "per_beat_ms": 0.3754,
+      "std_ms": 1.85
+    },
+    {
+      "batch_size": 256,
+      "total_ms": 50.18,
+      "per_beat_ms": 0.196,
+      "std_ms": 1.12
+    },
+    {
+      "batch_size": 512,
+      "total_ms": 60.89,
+      "per_beat_ms": 0.1189,
+      "std_ms": 10.12
+    }
+  ],
+  "embedder_latency": [
+    {
+      "batch_size": 1,
+      "total_ms": 43.49,
+      "per_beat_ms": 43.4905,
+      "std_ms": 1.0
+    },
+    {
+      "batch_size": 32,
+      "total_ms": 46.8,
+      "per_beat_ms": 1.4624,
+      "std_ms": 3.22
+    },
+    {
+      "batch_size": 128,
+      "total_ms": 48.43,
+      "per_beat_ms": 0.3784,
+      "std_ms": 1.64
+    },
+    {
+      "batch_size": 256,
+      "total_ms": 52.93,
+      "per_beat_ms": 0.2067,
+      "std_ms": 6.32
+    },
+    {
+      "batch_size": 512,
+      "total_ms": 58.17,
+      "per_beat_ms": 0.1136,
+      "std_ms": 2.66
+    }
+  ],
+  "memory": {
+    "rss_mb": 477.2,
+    "vms_mb": 1117.6
+  },
+  "device": {
+    "tf_device": "CPU",
+    "gpu_count": 0
+  },
+  "model_params": 36741,
+  "embedder_params": 36096
+}

@@ -1,0 +1,20 @@
+{
+  "H1_embedding_vs_f1_drop": {
+    "pearson_r": 0.9812,
+    "pearson_p": 3e-06,
+    "spearman_r": 0.65,
+    "spearman_p": 0.058073
+  },
+  "H1_embedding_vs_acc_drop": {
+    "pearson_r": 0.9586,
+    "pearson_p": 4.6e-05,
+    "spearman_r": 0.6167,
+    "spearman_p": 0.076929
+  },
+  "baseline_B_vs_f1_drop": {
+    "pearson_r": 0.7885,
+    "pearson_p": 0.011566,
+    "spearman_r": 0.3667,
+    "spearman_p": 0.33174
+  }
+}
